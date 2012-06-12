@@ -188,7 +188,7 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 
 1. In the **General** section, set the **Login name** to _AzureStore._ Select **SQL Server authentication** option and set the **Password** to _Azure$123_.
 
-	>**Note:** If you entered a different username or password than those suggested in this step you will need to update the web.config file for the MVC application you will use in the next exercise to match those values
+	>**Note:** If you entered a different username or password than those suggested in this step you will need to update the web.config file for the MVC 4 application you will use in the next exercise to match those values
 
 1. Uncheck **Enforce password policy** option to avoid having to change the User's password the first time you log on and set the **Default database** to _AdventureWorks_.
 
