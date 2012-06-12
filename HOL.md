@@ -25,7 +25,7 @@ The following is required to complete this hands-on lab:
 - [Microsoft Visual Studio 2010](http://msdn.microsoft.com/vstudio/products/)
 - [Microsoft .NET Framework 4.0](http://go.microsoft.com/fwlink/?linkid=186916)
 - [Windows Azure Tools for Microsoft Visual Studio 1.7](http://www.microsoft.com/windowsazure/sdk/)
-- [ASP.NET and ASP.NET MVC 3](http://www.microsoft.com/web/gallery/install.aspx?appid=MVC3)
+- [ASP.NET MVC 4](http://www.asp.net/mvc/mvc4/)
 - A Windows Azure subscription with the Virtual Machines Preview enabled - you can sign up for free trial [here](http://bit.ly/WindowsAzureFreeTrial)
 
 > **Note:** This lab was designed to use Windows 7 Operating System.
@@ -39,7 +39,7 @@ This hands-on lab includes the following exercises:
 
 - [Creating a SQL Server VM](#Exercise1)
 
-- [Deploying a Simple MVC3 Application](#Exercise2)
+- [Deploying a Simple MVC4 Application](#Exercise2)
 
  
 Estimated time to complete this lab: **45 minutes**.
@@ -180,7 +180,7 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 
 1. Restart the SQL Server instance. To do this, right-click the SQL Server instance and click **Restart**.
 
-1. Add a new user for the MVC3 application you will deploy in the following exercise. To do this, expand **Security** folder within the SQL Server instance. Right-click **Logins** folder and select **New Login**.
+1. Add a new user for the MVC4 application you will deploy in the following exercise. To do this, expand **Security** folder within the SQL Server instance. Right-click **Logins** folder and select **New Login**.
 
  	![Creating a New Login](./images/create-new-login.png?raw=true "Creating a New Login")
  
@@ -188,7 +188,7 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 
 1. In the **General** section, set the **Login name** to _AzureStore._ Select **SQL Server authentication** option and set the **Password** to _Azure$123_.
 
-	>**Note:** If you entered a different username or password than those suggested in this step you will need to update the web.config file for the MVC3 application you will use in the next exercise to match those values
+	>**Note:** If you entered a different username or password than those suggested in this step you will need to update the web.config file for the MVC application you will use in the next exercise to match those values
 
 1. Uncheck **Enforce password policy** option to avoid having to change the User's password the first time you log on and set the **Default database** to _AdventureWorks_.
 
@@ -214,7 +214,7 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 
 1. Close the **SQL Server Management Studio**.
 
-1. In order to allow the MVC3 application access the SQL Server database you will need to add an **Inbound Rule** for the SQL Server requests in the **Windows Firewall**. To do this, open **Windows Firewall with Advance Security** from **Start | All Programs | Administrative Tools**.
+1. In order to allow the MVC4 application access the SQL Server database you will need to add an **Inbound Rule** for the SQL Server requests in the **Windows Firewall**. To do this, open **Windows Firewall with Advance Security** from **Start | All Programs | Administrative Tools**.
 
 1. Right-click **Inbound Rules** node and select **New Rule**.
 
@@ -252,12 +252,12 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 
 
 <a name="Exercise2" />
-### Exercise 2: Deploying a Simple MVC3 Application ###
+### Exercise 2: Deploying a Simple MVC4 Application ###
 
 In this exercise, you will configure a simple Web application to connect to the SQL Server instance you created in the previous exercise and publish the application to **Windows Azure** and run it in the Cloud.
 
 <a name="Ex2Task1" />
-#### Task 1 - Configuring the MVC3 Application to Connect to an SQL Server Instance ####
+#### Task 1 - Configuring the MVC4 Application to Connect to an SQL Server Instance ####
 
 In this task, you will change the connection string to point to the SQL Server instance created in the previous exercise and update the configuration settings to enable network communication between the Web Role and the SQL Server instance.
 
@@ -317,7 +317,7 @@ In this task, you will change the connection string to point to the SQL Server i
 ````
 
 <a name="Ex2Task2" />
-#### Task 2 - Publishing the MVC3 Application to Windows Azure ####
+#### Task 2 - Publishing the MVC4 Application to Windows Azure ####
 
 In this task, you will publish the Web Application to Windows Azure using Visual Studio.
 
