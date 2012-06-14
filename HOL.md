@@ -44,6 +44,49 @@ This hands-on lab includes the following exercises:
  
 Estimated time to complete this lab: **45 minutes**.
 
+<a name="GettingStarted"></a>
+### Getting Started - Configuring Virtual Networking ###
+
+For this lab, you will define a virtual network where you can assign the virtual machines to specific subnets. 
+
+<a name="Ex1Task1" />
+#### Task 1 - Creating an Affinity Group ####
+
+The first task is to create an affinity group for the Virtual Network.
+
+1. Open a browser a go to https://manage.windowsazure.com. When prompted, login with your **Windows Azure** credentials. In the Windows Azure portal, click **Networks**, **Affinity Groups** and at the bottom click **Create**.
+
+1. Name the affinity group _myag_, include a description and select a **Region**. Click the button to create the affinity group.
+
+	![Creating an Affinity Group](images/creating-an-affinity-group.png?raw=true)
+
+	_Creating an Affinity Group_
+
+<a name="Ex1Task2" />
+#### Task 2 - Creating a new Virtual Network ####
+
+The next step is to create a new virtual network to your subscription.
+
+1. In the Windows Azure Portal, click **Networks**, **Virtual Networks** and at the bottom click **Create**.
+
+1. Set a Name for the virtual network, for example _MyVNET_ along with the description and click the arrow button to continue.
+
+	![creating a new virtual network](images/creating-a-new-virtual-network.png?raw=true)
+
+	_Creating a new virtual network_
+
+1. Set the **Address Space** value to _192.168.0.0/16_ and add a subnet named _AppSubnet_ with a prefix of _192.168.1.0/24_.
+
+	![Adding an address space and subnets](images/adding-an-address-space-and-subnets.png?raw=true)
+
+	_Adding an address space and subnets_
+
+1. Leave default settings for DNS and click the finish button.
+
+	![Creating the Virtual Network](images/creating-the-virtual-network.png?raw=true "Creating the Virtual Network")
+
+	_Creating the Virtual Network_
+
 <a name="Exercise1" />
 ### Exercise 1: Creating a SQL Server VM ###
 
@@ -70,19 +113,23 @@ In this task, you will create a new Virtual Machine using the Windows Azure Port
 
 	![VM Configuration](images/vm-configuration.png?raw=true "VM Configuration")
  
-	_VM Configuration_
+	_Virtual Machine Configuration_
 
-1. In the **VM Mode** page, select **Standalone Virtual Machine** option, then a unique name for the **DNS Name**. Finally, select the **ADVNET** Virtual Network from the **Region/Affinity Group/Virtual Network** list and click **Next**.
+1. In the **VM Mode** page, select **Standalone Virtual Machine** option, then a unique name for the **DNS Name**. Finally, select the Virtual Network you created before, from the **Region/Affinity Group/Virtual Network** list and click **Next**.
 
 	![Selecting VM mode](images/selecting-vm-mode.png?raw=true "Selecting VM mode")
 
-1. In the **VM Options** page, select the **APPSUBNET** virtual network subnet and click the finish button to create the new VM
+	_Setting the Virtual Machine Mode_
+
+1. In the **VM Options** page, select the **APPSUBNET** virtual network subnet and click the finish button to create the new VM.
 
 	![VM Options](images/vm-options.png?raw=true "VM Options")
 
-	_VM Options_
+	_Setting the Virtual Machine Options_
 
-1. In the **Virtual Machines** section, you will see the Virtual Machine you created displaying a _provisioning_ status. Wait until it changes to _On_ in order to continue.
+1. In the **Virtual Machines** section, you will see the Virtual Machine you created displaying a _provisioning_ status. Wait until it changes to _Running_ in order to continue.
+
+	> **Note:** It will take from 8 to 10 minutes for the Virtual Machine to complete the provisioning process.
 
 <a name="Ex1Task2" />
 #### Task 2 - Configuring SQL Server 2012 Instance ####
@@ -263,7 +310,7 @@ In this task, you will change the connection string to point to the SQL Server i
 
 1. Navigate to the **Windows Azure Portal** using a Web browser and sign in using the **Microsoft Account** associated with your Windows Azure account.
 
-1. In te left side pane, click on **Virtual Machines** and locate the SQL Server Virtual Machine you created in the previous exercise. Select the VM and then click **Connect**. 
+1. In the left side pane, click on **Virtual Machines** and locate the SQL Server Virtual Machine you created in the previous exercise. Select the VM and then click **Connect**. 
 
 1. When prompted to save or open the .rdp file, click **Open** and then log on using the Admin credentials you defined when you created the VM.
 
@@ -281,13 +328,13 @@ In this task, you will change the connection string to point to the SQL Server i
 
 1. Compile the solution in order to download the required packages.
 
-1. Open the**Web.config** file and locate the **connectionStrings** node at the end of the file. Replace the **Data Source** attribute values with the IP address of the  SQL Server Virtual Machine you copied in step 2.
+1. Open the **Web.config** file and locate the **connectionStrings** node at the end of the file. Replace the **Data Source** attribute values with the IP address of the  SQL Server Virtual Machine you copied in step 2.
 
 	<!--mark: 1-5-->
 	````XML
 	<connectionStrings>
-		<add name="DefaultConnection" connectionString="Data Source=192.168.2.4;initial catalog=AdventureWorksLT2008R2;Uid=AzureStore;Password=Azure$123;MultipleActiveResultSets=True" providerName="System.Data.SqlClient" />
-    <add name="AdventureWorksEntities" connectionString="metadata=res://*/Models.AdventureWorks.csdl|res://*/Models.AdventureWorks.ssdl|res://*/Models.AdventureWorks.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=192.168.2.4;initial catalog=AdventureWorksLT2008R2;Uid=AzureStore;Password=Azure$123;multipleactiveresultsets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+		<add name="DefaultConnection" connectionString="Data Source=[ENTER-IP-ADDRESS];initial catalog=AdventureWorksLT2008R2;Uid=AzureStore;Password=Azure$123;MultipleActiveResultSets=True" providerName="System.Data.SqlClient" />
+		<add name="AdventureWorksEntities" connectionString="metadata=res://*/Models.AdventureWorks.csdl|res://*/Models.AdventureWorks.ssdl|res://*/Models.AdventureWorks.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=192.168.2.4;initial catalog=AdventureWorksLT2008R2;Uid=AzureStore;Password=Azure$123;multipleactiveresultsets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
 	</connectionStrings>
 	````
 
@@ -304,7 +351,7 @@ In this task, you will change the connection string to point to the SQL Server i
     </ConfigurationSettings>
   </Role>
   <NetworkConfiguration>
-    <VirtualNetworkSite name="ADVNET" />
+    <VirtualNetworkSite name="MyVNET" />
     <AddressAssignments>
       <InstanceAddress roleName="AzureStore">
         <Subnets>
@@ -339,7 +386,7 @@ In this task, you will publish the Web Application to Windows Azure using Visual
 
 1. Click the **New** link located at the bottom of the page, select **Cloud Service** and then **Custom Create**.
 
-1. In the **Create Your Cloud Service** window, enter **AzureStore** in the **Url** field, select **adag** from the **Region/Affinity Group** selection list and check the **Deploy a Cloud Service package now** option.
+1. In the **Create Your Cloud Service** window, enter **AzureStore** in the **Url** field, select **myag** from the **Region/Affinity Group** selection list and check the **Deploy a Cloud Service package now** option.
 
 	![New Cloud Service](images/new-cloud-service5.png?raw=true "New Cloud Service")
 
