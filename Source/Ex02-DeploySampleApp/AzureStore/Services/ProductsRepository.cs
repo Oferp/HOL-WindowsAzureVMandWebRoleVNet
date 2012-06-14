@@ -10,22 +10,28 @@ namespace AzureStore.Services
         {
             List<string> products = null;
 
-            AdventureWorksEntities context = new AdventureWorksEntities();
-            var query = from product in context.Products
-                        select product.Name;
-            products = query.ToList();
+            using (var context = new AdventureWorksEntities())
+            {
+                var query = from product in context.Products
+                            select product.Name;
+                products = query.ToList();
+            }
 
             return products;
         }
 
         public List<string> Search(string criteria)
         {
-            var context = new AdventureWorksEntities();
-            var query = context.ExecuteStoreQuery<string>("Select Name from Production.Product Where Freetext(*,{0})", 
-                criteria);
+            List<string> result;
 
-            return query.ToList();
+            using (var context = new AdventureWorksEntities())
+            {
+                var query = context.ExecuteStoreQuery<string>("Select Name from Production.Product Where Freetext(*,{0})", criteria);
+
+                result = query.ToList();
+            }
+
+            return result;
         }
-
     }
 }
