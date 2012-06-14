@@ -131,10 +131,26 @@ In this task, you will create a new Virtual Machine using the Windows Azure Port
 
 	> **Note:** It will take from 8 to 10 minutes for the Virtual Machine to complete the provisioning process.
 
+1. Now, you will create and attach empty data disks to store the SQL Server logs and data files, and you will also add an endpoint. To do this, in the **Virtual Machines** section, select the SQL Server VM you created in this task.
+
+1. In the VM's **Dashboard**, click **Attach** in the menu at the bottom of the page and select **Attach Empty Disk**.
+
+	![Attach Empty Disk](images/attach-empty-disk.png?raw=true "Attach Empty Disk")
+
+	_Attach Empty Disk_
+
+1. In the **Attach Empty Disk** page, set the **Size** to _50_ GB and create the Disk.
+
+1. Wait until the process to attach the disk finishes. Repeat the steps 8 to 10 to create a second disk.
+
+1. You will see three disks for the VM: one for the **OS** and other two for **Data** and **Logs**.
+
+	> **Note:** It might take a few minutes until the data disks appear in the VM's dashboard within the Azure Portal.
+
 <a name="Ex1Task2" />
 #### Task 2 - Configuring SQL Server 2012 Instance ####
 
-In this task, you will install an SQL Server and configure it to enable remote access.
+In this task, you will set up SQL Server and configure it to enable remote access.
 
 1. In the Windows Azure Management Portal, click **Virtual Machines** on the left menu.
 
@@ -143,6 +159,34 @@ In this task, you will install an SQL Server and configure it to enable remote a
 	_Windows Azure Portal_
 
 1. Select your VM from the Virtual Machines list and click **Connect** to connect using **Remote Desktop Connection**.
+
+1. In the Virtual Machine, open **Server Manager** from **Start | All Programs | Administrative Tools**.
+
+1. Expand **Storage** node and select **Disk Management** option.
+
+ 	![Disk Management(2)](images/disk-management2.png?raw=true)
+ 
+	_Disks Management_
+
+1. Locate the disks you created using the **Attach Empty Disk** feature from the Windows Azure Management Portal. Right-click the first disk and select **Initialize Disk**.
+
+1. In the **Initialize Disk** dialog, leave the default values and click **OK**.
+
+1. Right-click the first disk unallocated space and select **New Simple Volume**.
+
+ 	![Disk Management](images/disk-management.png?raw=true)
+ 
+	_Disks Management_
+
+1. Follow the **New Simple Volume Wizard**. When asked for the **Volume Label** use _SQLData_.
+
+1. Wait until the process for the first disk is completed. Repeat the steps 15 to 16 but this time using the second disk. Set the **Volume Label** to _SQLLogs_.
+
+1. The **Disk Management** list of available disks should now show the **SQLData** and **SQLLogs** disks like in the following figure:
+
+ 	![Disks Management](./images/Disks-Management.png?raw=true "Disks Management")
+ 
+	_Disks Management_
 
 1. Open **SQL Server Configuration Manager** from **Start | All Programs | Microsoft SQL Server 2012 | Configuration Tools**.
 
@@ -175,7 +219,23 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 
 	>**Note:** Modifying Internet Explorer Enhanced Security configurations is not good practice and is only for the purpose of this particular lab. The correct approach should be to download the files locally and then copy them to a shared folder or directly to the VM.
 
-1. This lab uses the **AdventureWorks** database. Open an **Internet Explorer** browser and go to <http://msftdbprodsamples.codeplex.com/> to download  the **SQL Server 2012** sample databases.
+1. Open the SQL Server Management Studio from **Start | All Programs | Microsoft SQL Server 2012 | SQL Server Management Studio**.
+
+1. Connect to the SQL Server 2012 default instance using your Windows Account.
+
+1. Now, you will update the database's default locations in order to split the DATA from the LOGS. To do this, right click on you SQL Server instance and select **Properties**.
+
+1. Select **Database Settings** from the left side pane.
+
+1. Locate the **Database default locations** section and update the default values to point to the disks you attached in the previous task.
+
+ 	![Setting Database Default Locations](./images/Setting-Database-Default-Locations.png?raw=true "Setting Database Default Locations")
+ 
+	_Setting Database Default Locations_
+
+1. Using Windows Explorer create the following folders: **F:\Data, G:\Logs** and **G:\Backups**.
+
+1. This lab uses the **AdventureWorks** database. Open an **Internet Explorer** browser and go to <http://msftdbprodsamples.codeplex.com/> to download  the **SQL Server 2012** sample databases. Once on the page click SQL Server 2012 DW and then download Adventure Works 2012 Data File. Download the file to F:\Data.
 
 1. Right click the database file and open the properties. Click **unblock**.
 
@@ -187,7 +247,7 @@ In this task, you will add the **AdventureWorks** database that will be used by 
  
 	_Object Explorer - Attaching Adventureworks Database_
 
-1. In the **Attach Databases** dialog, press **Add**. Browse to the path where the Sample Databases were installed and select **AdventureWorks** data file.  Click **OK**.
+1. In the **Attach Databases** dialog, press **Add**. Browse to the data disk and select the Adventure Works data file.
 
 1. Now, select the AdventureWorks Log's row within **database details** and click **Remove**.
 
@@ -211,13 +271,13 @@ In this task, you will add the **AdventureWorks** database that will be used by 
  
 	_Full-Text Catalog Name_
 
-1. Right-click the **AdventureWorksCatalog** and select **Properties**. Select the **Tables/Views** menu item. Add the **Products** table to the **Table/View objects assigned to the Catalog** list. Check _Name_ from **eligible columns** and click **OK**.
+1. Right-click the **AdventureWorksCatalog** and select **Properties**. Select the **Tables/Views** menu item. Add the **Production.Product** table to the **Table/View objects assigned to the Catalog** list. Check _Name_ from **eligible columns** and click **OK**.
 
 	![Full-Text Catalog Properties](images/full-text-catalog-properties.png?raw=true "Full-Text Catalog Properties")
  
 	_Full-Text Catalog Properties_
 
-1. Eenable **Mixed Mode Authentication** to the SQL Server instance. To do this, in the **SQL Server Management Studio**, right-click the server instance and click **Properties**.
+1. Enable **Mixed Mode Authentication** to the SQL Server instance. To do this, in the **SQL Server Management Studio**, right-click the server instance and click **Properties**.
 
 1. Select the **Security** page in the right side pane and then select **SQL Server and Windows Authentication mode** under **Server Authentication** section. Click **OK** to save changes.
 
@@ -251,7 +311,7 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 
 1. Expand **AdventureWorks** database within **Databases** folder. In the **Security** folder, expand **Users** and double-click **AzureStore** user.
 
-1. Update the **Database role membership**. Select the **Membership** page and check the _db_owner_ role for the **AzureStore** user and click **OK**.
+1. Select the **Membership** page, and select the _db_owner_ role checkbox for the **AzureStore** user and click **OK**.
 
  	![Adding Database role membership to AzureStore user](./images/Adding-Database-role-membership-to-AzureStore-user.png?raw=true "Adding Database role membership to AzureStore user")
  
@@ -263,7 +323,7 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 
 1. In order to allow the MVC4 application access the SQL Server database you will need to add an **Inbound Rule** for the SQL Server requests in the **Windows Firewall**. To do this, open **Windows Firewall with Advance Security** from **Start | All Programs | Administrative Tools**.
 
-1. Right-click **Inbound Rules** node and select **New Rule**.
+1. Select **Inbound Rules** node, right-click it and select **New Rule**.
 
  	![Creating an Inbound Rule](./images/Creating-an-Inbound-Rule.png?raw=true "Creating an Inbound Rule")
  
@@ -334,7 +394,7 @@ In this task, you will change the connection string to point to the SQL Server i
 	````XML
 	<connectionStrings>
 		<add name="DefaultConnection" connectionString="Data Source=[ENTER-IP-ADDRESS];initial catalog=AdventureWorksLT2008R2;Uid=AzureStore;Password=Azure$123;MultipleActiveResultSets=True" providerName="System.Data.SqlClient" />
-		<add name="AdventureWorksEntities" connectionString="metadata=res://*/Models.AdventureWorks.csdl|res://*/Models.AdventureWorks.ssdl|res://*/Models.AdventureWorks.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=192.168.2.4;initial catalog=AdventureWorksLT2008R2;Uid=AzureStore;Password=Azure$123;multipleactiveresultsets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
+		<add name="AdventureWorksEntities" connectionString="metadata=res://*/Models.AdventureWorks.csdl|res://*/Models.AdventureWorks.ssdl|res://*/Models.AdventureWorks.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=[ENTER-IP-ADDRESS];initial catalog=AdventureWorksLT2008R2;Uid=AzureStore;Password=Azure$123;multipleactiveresultsets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" />
 	</connectionStrings>
 	````
 
