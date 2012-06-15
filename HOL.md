@@ -115,7 +115,7 @@ In this task, you will create a new Virtual Machine using the Windows Azure Port
  
 	_Virtual Machine Configuration_
 
-1. In the **VM Mode** page, select **Standalone Virtual Machine** option, then a unique name for the **DNS Name**. Finally, select the Virtual Network you created before, from the **Region/Affinity Group/Virtual Network** list and click **Next**.
+1. In the **VM Mode** page, select **Standalone Virtual Machine** option and provide a unique name for the **DNS Name**. Finally, select a **Storage Account** or leave the default value _Use Automatically Generated Storage Account_ and then select the Virtual Network you created previously from the **Region/Affinity Group/Virtual Network** list and click **Next** to contiue.
 
 	![Selecting VM mode](images/selecting-vm-mode.png?raw=true "Selecting VM mode")
 
@@ -180,7 +180,7 @@ In this task, you will set up SQL Server and configure it to enable remote acces
 
 1. Follow the **New Simple Volume Wizard**. When asked for the **Volume Label** use _SQLData_.
 
-1. Wait until the process for the first disk is completed. Repeat the steps 15 to 16 but this time using the second disk. Set the **Volume Label** to _SQLLogs_.
+1. Wait until the process for the first disk is completed. Repeat the steps 5 to 8 but this time using the second disk. Set the **Volume Label** to _SQLLogs_.
 
 1. The **Disk Management** list of available disks should now show the **SQLData** and **SQLLogs** disks like in the following figure:
 
