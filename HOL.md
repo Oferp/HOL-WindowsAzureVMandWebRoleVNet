@@ -235,6 +235,8 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 
 1. Using Windows Explorer create the following folders: **F:\Data, G:\Logs** and **G:\Backups**.
 
+1. Restart SQL Server. In the **Object Explorer**, right-click on the server node and select **Restart**. 
+
 1. This lab uses the **AdventureWorks** database. Open an **Internet Explorer** browser and go to <http://msftdbprodsamples.codeplex.com/> to download  the **SQL Server 2012** sample databases. Once on the page click SQL Server 2012 DW and then download Adventure Works 2012 Data File. Download the file to F:\Data.
 
 1. Right click the database file and open the properties. Click **unblock**.
