@@ -49,7 +49,7 @@ Estimated time to complete this lab: **45 minutes**.
 
 For this lab, you will define a virtual network where you can assign the virtual machines to specific subnets. 
 
-<a name="Ex1Task1" />
+<a name="GettingStartedTask1" />
 #### Task 1 - Creating an Affinity Group ####
 
 The first task is to create an affinity group for the Virtual Network.
@@ -62,7 +62,7 @@ The first task is to create an affinity group for the Virtual Network.
 
 	_Creating an Affinity Group_
 
-<a name="Ex1Task2" />
+<a name="GettingStartedTask2" />
 #### Task 2 - Creating a new Virtual Network ####
 
 The next step is to create a new virtual network to your subscription.
