@@ -12,12 +12,12 @@
     {
         public ActionResult About()
         {
-            return View();
+            return this.View();
         }
 
         public ActionResult Index()
         {
-            return Search(null);
+            return this.Search(null);
         }
 
         [HttpPost]
@@ -27,18 +27,18 @@
             {
                 List<string> cart = this.Session["Cart"] as List<string> ?? new List<string>();
                 cart.Add(selectedProduct);
-                Session["Cart"] = cart;
+                this.Session["Cart"] = cart;
             }
 
-            return RedirectToAction("Index");
+            return this.RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult Search(string SearchCriteria)
+        public ActionResult Search(string searchCriteria)
         {
             Services.IProductRepository productRepository = new Services.ProductsRepository();
-            var products = string.IsNullOrEmpty(SearchCriteria) ?
-                productRepository.GetProducts() : productRepository.Search(SearchCriteria);
+            var products = string.IsNullOrEmpty(searchCriteria) ?
+                productRepository.GetProducts() : productRepository.Search(searchCriteria);
 
             // add all products currently not in session
             var itemsInSession = this.Session["Cart"] as List<string> ?? new List<string>();
@@ -47,10 +47,10 @@
             var model = new IndexViewModel()
             {
                 Products = filteredProducts,
-                SearchCriteria = SearchCriteria
+                SearchCriteria = searchCriteria
             };
 
-            return View("Index", model);
+            return this.View("Index", model);
         }
 
         public ActionResult Checkout()
@@ -61,22 +61,22 @@
                 Products = itemsInSession
             };
 
-            return View(model);
+            return this.View(model);
         }
 
         [HttpPost]
-        public ActionResult Remove(string Products)
+        public ActionResult Remove(string products)
         {
-            if (Products != null)
+            if (products != null)
             {
                 var itemsInSession = this.Session["Cart"] as List<string>;
                 if (itemsInSession != null)
                 {
-                    itemsInSession.Remove(Products);
+                    itemsInSession.Remove(products);
                 }
             }
 
-            return RedirectToAction("Checkout");
+            return this.RedirectToAction("Checkout");
         }
     }
 }

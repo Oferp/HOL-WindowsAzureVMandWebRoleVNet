@@ -49,7 +49,7 @@ Estimated time to complete this lab: **45 minutes**.
 
 For this lab, you will define a virtual network where you can assign the virtual machines to specific subnets. 
 
-<a name="Ex1Task1" />
+<a name="GettingStartedTask1" />
 #### Task 1 - Creating an Affinity Group ####
 
 The first task is to create an affinity group for the Virtual Network.
@@ -62,7 +62,7 @@ The first task is to create an affinity group for the Virtual Network.
 
 	_Creating an Affinity Group_
 
-<a name="Ex1Task2" />
+<a name="GettingStartedTask2" />
 #### Task 2 - Creating a new Virtual Network ####
 
 The next step is to create a new virtual network to your subscription.
@@ -115,7 +115,7 @@ In this task, you will create a new Virtual Machine using the Windows Azure Port
  
 	_Virtual Machine Configuration_
 
-1. In the **VM Mode** page, select **Standalone Virtual Machine** option, then a unique name for the **DNS Name**. Finally, select the Virtual Network you created before, from the **Region/Affinity Group/Virtual Network** list and click **Next**.
+1. In the **VM Mode** page, select **Standalone Virtual Machine** option and provide a unique name for the **DNS Name**. Finally, select a **Storage Account** or leave the default value _Use Automatically Generated Storage Account_ and then select the Virtual Network you created previously from the **Region/Affinity Group/Virtual Network** list and click **Next** to contiue.
 
 	![Selecting VM mode](images/selecting-vm-mode.png?raw=true "Selecting VM mode")
 
@@ -180,7 +180,7 @@ In this task, you will set up SQL Server and configure it to enable remote acces
 
 1. Follow the **New Simple Volume Wizard**. When asked for the **Volume Label** use _SQLData_.
 
-1. Wait until the process for the first disk is completed. Repeat the steps 15 to 16 but this time using the second disk. Set the **Volume Label** to _SQLLogs_.
+1. Wait until the process for the first disk is completed. Repeat the steps 5 to 8 but this time using the second disk. Set the **Volume Label** to _SQLLogs_.
 
 1. The **Disk Management** list of available disks should now show the **SQLData** and **SQLLogs** disks like in the following figure:
 
@@ -234,6 +234,8 @@ In this task, you will add the **AdventureWorks** database that will be used by 
 	_Setting Database Default Locations_
 
 1. Using Windows Explorer create the following folders: **F:\Data, G:\Logs** and **G:\Backups**.
+
+1. Restart SQL Server. In the **Object Explorer**, right-click on the server node and select **Restart**. 
 
 1. This lab uses the **AdventureWorks** database. Open an **Internet Explorer** browser and go to <http://msftdbprodsamples.codeplex.com/> to download  the **SQL Server 2012** sample databases. Once on the page click SQL Server 2012 DW and then download Adventure Works 2012 Data File. Download the file to F:\Data.
 
